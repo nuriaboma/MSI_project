@@ -1,0 +1,71 @@
+#############################################################
+## JOB DESCRIPTION                                         ##
+#############################################################
+
+# SMD simulation (stretching) of adenosine receptor in vacuum
+# Constant temperature
+
+#############################################################
+## ADJUSTABLE PARAMETERS                                   ##
+#############################################################
+
+structure          step5_input.psf
+coordinates        step5_input.pdb
+outputName         step5_smd
+
+set temperature    300
+
+#############################################################
+## SIMULATION PARAMETERS                                   ##
+#############################################################
+
+# Input
+paraTypeCharmm     on
+parameters toppar/par_all36_cgenff.prm
+parameters toppar/par_interface.prm
+parameters toppar/par_all36m_prot.prm
+parameters toppar/par_all36_carb.prm
+parameters toppar/etq.prm
+parameters toppar/par_all36_lipid.prm
+parameters toppar/par_all36_na.prm
+parameters toppar/toppar_water_ions.str
+
+temperature         $temperature
+ 
+# Force-Field Parameters
+exclude             scaled1-4
+1-4scaling          1.0
+cutoff              12.0
+switching           on
+switchdist          10.0
+pairlistdist        16.0
+
+lonePairs           on
+
+# Integrator Parameters
+timestep            1.0  ;# 1fs/step (reduced to avoid lone-pair instability)
+rigidBonds          water  ;# use water instead of all to allow lone-pair flexibility
+nonbondedFreq       1
+fullElectFrequency  2
+stepspercycle       10
+
+# Constant Temperature Control
+langevin            on    ;# do langevin dynamics
+langevinDamping     1     ;# damping coefficient (gamma) of 1/ps
+langevinTemp        $temperature
+langevinHydrogen    no    ;# don't couple langevin bath to hydrogens
+
+# Output
+binaryoutput        no
+dcdfreq             500     ;# 500steps = every 1ps
+outputEnergies      100
+
+#############################################################
+## EXTRA PARAMETERS                                        ##
+#############################################################
+
+# Tcl interface
+tclForces           on
+tclForcesScript     smd.tcl
+
+run  200000;# 400 ps
