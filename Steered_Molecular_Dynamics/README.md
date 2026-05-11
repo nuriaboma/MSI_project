@@ -118,7 +118,7 @@ To do so, in the path `Steered_Molecular_Dynamics/Results_and_analysis/scripts` 
 The ligand is trapped in a binding pocket. As the virtual spring pulls, the ligand often gets stuck behind a sidechain (like that chlorine getting caught). During this time, the time increases, but the extension stays the same (this creates a plateau (flat line)). Once the force builds up enough to overcome the barrier (the rupture point), the ligand pops forward to catch up with the spring. This creates a sharp jump in the extension.
 As the protein is constantly moving, sometimes the pocket squeezes the ligand, slowing it down, and sometimes it opens, letting it slide faster. This makes the slope look noisy rather than a clean diagonal.
 
-![alt text](time_vs_extension.png)
+![alt text](Results_and_analysis/plots_and_pictures/time_vs_extension.png)
 
 #### Force vs Extension
 Between 0-5Å is when the primary contacts (the strongest hydrogen bonds or that clorine interaction) broke almost immediately as the spring started pulling. So:
@@ -129,12 +129,12 @@ Between 0-5Å is when the primary contacts (the strongest hydrogen bonds or that
 
 - After 30Å: If the force drops and stays consistently low (near 0), that means the ligand is finally in the water. 
 
-![alt text](force_vs_extension.png)
+![alt text](Results_and_analysis/plots_and_pictures/force_vs_extension.png)
 
 #### Work vs Extension 
 This plot shows a steady increase. 
 
-![alt text](work_vs_extension.png)
+![alt text](Results_and_analysis/plots_and_pictures/work_vs_extension.png)
 
 #### RMSD throghout the trajectory
 
@@ -142,7 +142,7 @@ As shown, the root mean square deviation was calculated for the protein backbone
 
 So overall, the unbinding pathway observed is due to the ligand-protein dissociatin and not structural failure of the receptor. 
 
-![alt text](RMSD_over_time.png)
+![alt text](Results_and_analysis/plots_and_pictures/RMSD_over_time.png)
 
 #### Heatmaps of the residues most interacting with the ligand at a specific moment
 
