@@ -22,11 +22,17 @@ This is the commands to run the production step, in which the main goal is to si
 Also, for this it was necessary to obtain teh file `gromacs/topol.top` and folder `gromacs/toppar/` which are obtained from the CHARMM-GUI output. The file is the main GROMACS topology file. It tells GROMACS what the system is made of, how many molecules there are and which parameters include files to load before building the run input file (`.tpr`) with `gmx grompp`. And the folder contains the actual parameter, usually including the force field definitions, atoms types, bonded parameters and other component-specific for the protein, lipids, water, ions and sometimes the ligand. 
 
 Here are the type of files more commonly used when `gmx mdrun` is run:
+
 | **Trayectoria**      | `.xtc` o `.trr` | **Análisis de movimiento y estructura.** Este es el archivo clave. Se utiliza para calcular: la Desviación Cuadrática Media (RMSD), las fluctuaciones de residuos (RMSF), las distancias entre átomos, el radio de giro, la formación o ruptura de puentes de hidrógeno, y visualización de la dinámica de la molécula. Si es `.trr`, también permite analizar velocidades y fuerzas. |
+
 | **Energía**          | `.edr`          | **Análisis termodinámico.** Se usa para monitorear la estabilidad y la calidad de la simulación. Permite graficar la evolución de la energía potencial, la energía total, la temperatura y la presión, verificando que el sistema se mantiene en equilibrio y que la conservación de la energía es adecuada.                                                                          |
+
 | **Registro**         | `.log`          | **Diagnóstico y rendimiento.** Este archivo es crucial para verificar que la simulación se ejecutó correctamente. Contiene detalles sobre los parámetros de inicio, la hora de finalización, la velocidad de cálculo (rendimiento de CPU/GPU), y un resumen de las estadísticas de conservación de energía.                                                                           |
+
 | **Estructura final** | `.gro`          | **Punto de partida para el análisis o simulaciones futuras.** Representa la última configuración del sistema al final del tiempo simulado y puede ser utilizado como la estructura inicial para una extensión de la simulación o para análisis estructurales estáticos.                                                                                                               |
+
 | **Punto de control** | `.cpt`          | **Reinicio y continuación.** Este archivo binario permite al usuario detener la simulación y reiniciarla exactamente desde el mismo punto en otro momento o en otra máquina. Es esencial para simulaciones muy largas o para recuperarse de interrupciones (por ejemplo, fallos en el sistema).                                                                                       |
+
 | **Estado**           | `.ndx`          | **Selección de grupos de átomos para el análisis.** Define listas de átomos (grupos) que son de interés para el análisis. Se usa como archivo de entrada para muchas herramientas de post-procesamiento de GROMACS.                                                                                                                                                                   |
 
 From the previous docuemnts the `prod_replica1.gro` is the most important file right now. It contains the final 3D coordinates of the system.
