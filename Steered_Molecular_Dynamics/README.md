@@ -6,7 +6,7 @@ https://drive.google.com/drive/folders/107G5eJHJJhJrEHGiAEx_m73e5bq47zV7?usp=dri
 
 ## Steered MD
 
-To do this part, it is needed the production ouput files. Also this part was done on an HPC cluster due to high demand on computaitonal power. To otbain them it was run these comands:
+To do this part, it is needed the equilibration and production ouput files. Also this part was done on an HPC cluster due to high demand on computaitonal power. To otbain them it was run these comands:
 
 ```
 
@@ -17,9 +17,12 @@ gmx mdrun -deffnm prod_rep3
 gmx mdrun -deffnm xxx -nb gpu -pme gpu -bonded gpu -update gpu
 
 ```
+
 This is the commands to run the production step, in which the main goal is to simulate the system all along the time period. `mdrun` is used to execute the simulation. `-deffnm` establishes the base name for all the input and output files. So at the end, 3 simulations will be run for the same simulation production. In MD this is done to obtain a better sampling statistics (to take into account all the atomic configurations and energies) and to make sure the results do not depend on the only initial trajectory. 
 
 Also, for this it was necessary to obtain teh file `gromacs/topol.top` and folder `gromacs/toppar/` which are obtained from the CHARMM-GUI output. The file is the main GROMACS topology file. It tells GROMACS what the system is made of, how many molecules there are and which parameters include files to load before building the run input file (`.tpr`) with `gmx grompp`. And the folder contains the actual parameter, usually including the force field definitions, atoms types, bonded parameters and other component-specific for the protein, lipids, water, ions and sometimes the ligand. 
+
+The SMD simulations were extended directly from independent equilibration states provided by the instructor as mentioned before and the three distinct replicas were achieved by utilizing unique checkpoint files (`.cpt`) generated via randomized velocity seeding during the cluster equilibration phase. By specifying `gen_vel = no` in the pulling configuration file (`.mdp`), the unique chaotic trajectories and velocity distributions of each equilibration replica were continuously and seamlessly propagated into the production pulling phase without artificial structural strain.
 
 Here are the type of files more commonly used when `gmx mdrun` is run:
 
