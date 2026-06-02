@@ -1,0 +1,46 @@
+                      :-) GROMACS - gmx mdrun, 2024.4 (-:
+
+Executable:   /soft/system/software/GROMACS/2024.4/bin/gmx
+Data prefix:  /soft/system/software/GROMACS/2024.4
+Working dir:  /users/gpcr/elizaveta/msi_gromacs_g1/derivative_2/rep2
+Command line:
+  gmx mdrun -deffnm step7_prod_repl2 -cpi step7_prod_repl2.cpt
+
+Compiled SIMD is AVX2_256, but CPU also supports AVX_512 (see log).
+Reading file step7_prod_repl2.tpr, VERSION 2024.3 (single precision)
+Note: file tpx version 133, software tpx version 134
+Changing nstlist from 20 to 80, rlist from 1.206 to 1.347
+
+Update groups can not be used for this system because an incompatible virtual site type is used
+
+Using 96 MPI threads
+Using 1 OpenMP thread per tMPI thread
+
+starting mdrun 'Title'
+25000000 steps,  50000.0 ps (continuing from step 1862200,   3724.4 ps).
+
+Writing final coordinates.
+
+
+Dynamic load balancing report:
+ DLB got disabled because it was unsuitable to use.
+ Average load imbalance: 8.5%.
+ The balanceable part of the MD step is 85%, load imbalance is computed from this.
+ Part of the total run time spent waiting due to load imbalance: 7.2%.
+ Average PME mesh/force load: 0.733
+ Part of the total run time spent waiting due to PP/PME imbalance: 3.1 %
+
+NOTE: 7.2 % of the available CPU time was lost due to load imbalance
+      in the domain decomposition.
+      You can consider manually changing the decomposition (option -dd);
+      e.g. by using fewer domains along the box dimension in which there is
+      considerable inhomogeneity in the simulated system.
+
+               Core t (s)   Wall t (s)        (%)
+       Time:  6905877.869    71936.230     9600.0
+                         19h58:56
+                 (ns/day)    (hour/ns)
+Performance:       55.580        0.432
+
+GROMACS reminds you: "Throughout my academic career, I'd given some pretty good talks. But being considered the best speaker in the computer science department is like being known as the tallest of the Seven Dwarfs." (Randy Pausch)
+

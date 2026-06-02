@@ -1,0 +1,39 @@
+Usage:
+ source /soft/system/software/GROMACS/2026.2-gpu/bin/GMXRC
+ before executing gmx 
+                      :-) GROMACS - gmx mdrun, 2026.2 (-:
+
+Executable:   /soft/system/software/GROMACS/2026.2-gpu/bin/gmx
+Data prefix:  /soft/system/software/GROMACS/2026.2-gpu
+Working dir:  /users/gpcr/elizaveta/msi_gromacs_g1/derivative_1/rep1
+Command line:
+  gmx mdrun -deffnm step7_prod_repl1 -nb gpu -pme gpu -bonded gpu
+
+Reading file step7_prod_repl1.tpr, VERSION 2024.3 (single precision)
+Note: file tpx version 133, software tpx version 138
+Changing nstlist from 20 to 100, rlist from 1.206 to 1.41
+
+Update groups can not be used for this system because an incompatible virtual site type is used
+
+1 GPU selected for this run.
+Mapping of GPU IDs to the 2 GPU tasks in the 1 rank on this node:
+  PP:0,PME:0
+PP tasks will do non-perturbed short-ranged and most bonded interactions on the GPU
+PP task will update and constrain coordinates on the CPU
+PME tasks will do all aspects on the GPU
+Using 1 MPI thread
+Using 12 OpenMP threads 
+
+starting mdrun 'Title'
+25000000 steps,  50000.0 ps.
+
+Writing final coordinates.
+
+               Core t (s)   Wall t (s)        (%)
+       Time:   745479.299    62123.280     1200.0
+                         17h15:23
+                 (ns/day)    (hour/ns)    (ms/step)  (Matom*steps/s) 
+Performance:       69.539        0.345        2.485           28.811 
+
+GROMACS reminds you: "Confirmed" (Star Trek)
+
