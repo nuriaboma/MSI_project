@@ -160,6 +160,78 @@ The distance heatmap of the native ligand reveals a multi-step unbinding process
 ![alt text](Results_and_analysis/plots_and_pictures/ligand_unbinding_heatmap.png)
 
 
+# SMD of the derivatives (MOD1 & MOD2)
+
+## MOD1
+
+### Identification of the pulling group
+
+1. Tell GROMACS what to pull and what to hold still. 
+
+    - group 1: the protein (usually the reference/anchor)
+
+    - group 2: the ligand (UNL residue) --> this appears on the ./our_derivative/·_derivative_ligand_onluX.pdb 
+
+
+2. Create and index file (`.ndx`)
+
+GROMACS needs to know which atoms belong to the ligand:
+
+`gmx make_ndx -f prod_replicaX.gro -o index_replX_MODX.ndx`
+
+When this command is runned, we will see that our protein (group 1) has 3939 atoms and ETQ has 50 atoms. So GROMACS will treat these 50 atoms as a single group to pull. Then simply type `q` and press enter. This will save the `index_replX_MODX.ndx` file and exit the program. We have to repeat the same step for each replica (./run1_gpu, ./run2_gpu, ./run3_gpu).
+
+3. Write the pull script
+
+Create a new file (`pull.mdp`) in which it is defined the pulling speed and the force. Before that, take into account the direcition of the pulling, in which usually, for a memrbane system, the ligand is pulled along the Z-axis (perpendicular to the memrbane) to pull the ligand out into the water. 
+
+Create a file named `pull.mdp`. And then run this command `gmx grompp -f pull.mdp -c prod_replicaX.gro -p topol.top -n index_replX_MODX.ndx -o smd_replicaX.tpr -maxwarn 1` in which:
+
+- `pull.mdp`: Defines the simulation settings (time steps, Tº and SMD pulling paramters)
+
+- `prod_replica1.gro`: provides the starting coordinates of all atoms from the previous production run
+
+- `topol.top`: describes the molecular connectivity, atom types and force field parameters. This file can be found from the output files CHARMM-GUI gives:
+
+`FOLDER_FROM_CHARMM_GUI/gromacs/topol.top` so then copy this file and paste it into the current folder which is `GROMACS_production_results/runX_gpu/`. Also copy the entire `FOLDER_FROM_CHARMM_GUI/gromacs/toppar/` folder because GROMACS needs it, because if not, this error will be raised:
+
+```
+Fatal error:
+Topology include file "toppar/forcefield.itp" not found
+```
+
+- `index.ndx`: defines specific atom groups (like receptor and ligand) for the pulling force to act upon. 
+
+- `smd_replica1.tpr`: a binary file contianing all information needed to start the simulaiton with mdrun.
+
+Once the command finishes, the file `smd_replicaX.tpr` will appear on the current folder. 
+
+### Start the simulation
+
+`gmx mdrun -deffnm smd_replicaX -v`
+
+The `-v` flag will alow to show an estimate of how long it will take. As output files, GROMACS wil start creating:
+
+- `smd_replicaX.xtc`: the movie of the ligand being pulled. 
+
+- `smd_replicaX.xvg`: It contains the force and position values needed to calculate the binding energy. 
+
+- `smd_replicaX.gro`: Is a single, static picture that contains the exact x, y, and z coordinates for every single atom at a specific moment in time.
+
+After running for aproximately 3h (no GPU), these files were produced:
+
+````
+-rw-r--r--@  1 mariapaupijoan  staff   172K May  8 23:38 smd_replica1.log
+-rw-r--r--@  1 mariapaupijoan  staff    82K May  8 23:38 smd_replica1_pullf.xvg
+-rw-r--r--@  1 mariapaupijoan  staff    87K May  8 23:38 smd_replica1_pullx.xvg
+-rw-r--r--@  1 mariapaupijoan  staff   130K May  8 23:38 smd_replica1.edr
+-rw-r--r--@  1 mariapaupijoan  staff   4.6M May  8 23:38 smd_replica1.gro
+-rw-r--r--@  1 mariapaupijoan  staff   1.6M May  8 23:38 smd_replica1_prev.cpt
+-rw-r--r--@  1 mariapaupijoan  staff   1.6M May  8 23:38 smd_replica1.cpt
+````
+To visualize if the SMD was correctly done in VMD, load a new molecule, the `smd_replicaX.gro` file and then ont top of that, load the trajectory file (`.xtc`) and play the pulling. Notice that the three replicates achieved enough force to bull the ligand out of the bindig pocket. 
+
+
 # !!!!!!!!!! TO DO in the future - MISSING !!!!!!!!!!:
 
 - Heat map of the residue interacting the most for the MOD ligand
